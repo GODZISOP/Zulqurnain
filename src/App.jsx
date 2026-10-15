@@ -820,37 +820,6 @@ export default function App() {
                   Zulqarnain Ventures LLC is a modern e-commerce store offering a wide range of quality products for everyday needs. We focus on providing reliable products, competitive prices, and a convenient online shopping experience for our customers.
                 </p>
 
-                {/* Structured Verification Ledger */}
-                <div className="corp-ledger">
-                  <div className="corp-ledger-row">
-                    <span className="ledger-label">Company Name</span>
-                    <div className="ledger-val-group">
-                      <strong>Zulqarnain Ventures LLC</strong>
-                      <span className="ledger-sub">Modern E-Commerce Store & Direct Distributor</span>
-                    </div>
-                  </div>
-
-                  <div className="corp-ledger-row">
-                    <span className="ledger-label">Core Mission</span>
-                    <div className="ledger-val-group">
-                      <span>Delivering tested, high-quality products for home, office, kitchen, and lifestyle with transparent pricing.</span>
-                    </div>
-                  </div>
-
-                  <div className="corp-ledger-row">
-                    <span className="ledger-label">Customer Support</span>
-                    <div className="ledger-val-group">
-                      <span>Direct phone, email, and live WhatsApp assistance for all orders and product inquiries.</span>
-                    </div>
-                  </div>
-
-                  <div className="corp-ledger-row">
-                    <span className="ledger-label">Product Departments</span>
-                    <div className="ledger-val-group">
-                      <span>Home & Kitchen • Health & Household • Office • Pet Supplies • Sports & Outdoors • Tools • Automotive • Baby Products</span>
-                    </div>
-                  </div>
-                </div>
 
                 <div className="corp-actions-row">
                   <button 
@@ -1066,7 +1035,7 @@ export default function App() {
                       </button>
                     </div>
                     <div className="subtotal-preview">
-                      Subtotal: <strong>₨ {(activeProduct.priceNumeric * detailQuantity).toLocaleString()}</strong>
+                      Subtotal: <strong>${(activeProduct.priceNumeric * detailQuantity).toLocaleString()}</strong>
                     </div>
                   </div>
 
@@ -1081,7 +1050,7 @@ export default function App() {
 
                     <a 
                       className="btn-detail-whatsapp"
-                      href={`https://wa.me/+966537842419?text=${encodeURIComponent(`Hello Zulqarnain Ventures LLC, I want to order ${detailQuantity}x ${activeProduct.name} (SKU: ${activeProduct.sku}, Total: ₨ ${(activeProduct.priceNumeric * detailQuantity).toLocaleString()}).`)}`}
+                      href={`https://wa.me/+966537842419?text=${encodeURIComponent(`Hello Zulqarnain Ventures LLC, I want to order ${detailQuantity}x ${activeProduct.name} (SKU: ${activeProduct.sku}, Total: $${(activeProduct.priceNumeric * detailQuantity).toLocaleString()}).`)}`}
                       target="_blank"
                       rel="noreferrer"
                     >
@@ -1505,7 +1474,7 @@ export default function App() {
                             </button>
                           </div>
                           <div className="cart-item-price">
-                            ₨ {(item.product.priceNumeric * item.quantity).toLocaleString()}
+                            ${(item.product.priceNumeric * item.quantity).toLocaleString()}
                           </div>
                         </div>
                       </div>
@@ -1524,7 +1493,7 @@ export default function App() {
                   </div>
                   <div className="cart-summary-line cart-summary-total">
                     <span>Subtotal</span>
-                    <span>₨ {cartSubtotal.toLocaleString()}</span>
+                    <span>${cartSubtotal.toLocaleString()}</span>
                   </div>
                 </div>
 
@@ -1533,8 +1502,8 @@ export default function App() {
                     className="btn-checkout-wa"
                     href={`https://wa.me/+966537842419?text=${encodeURIComponent(
                       `Hello Zulqarnain Ventures LLC, I want to place an order:\n\n` +
-                      cart.map(i => `• ${i.quantity}x ${i.product.name} (SKU: ${i.product.sku}) - ₨ ${(i.product.priceNumeric * i.quantity).toLocaleString()}`).join('\n') +
-                      `\n\nTotal Order Value: ₨ ${cartSubtotal.toLocaleString()}\n\nPlease confirm availability and payment details.`
+                      cart.map(i => `• ${i.quantity}x ${i.product.name} (SKU: ${i.product.sku}) - $${(i.product.priceNumeric * i.quantity).toLocaleString()}`).join('\n') +
+                      `\n\nTotal Order Value: $${cartSubtotal.toLocaleString()}\n\nPlease confirm availability and payment details.`
                     )}`}
                     target="_blank"
                     rel="noreferrer"
