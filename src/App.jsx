@@ -305,16 +305,9 @@ export default function App() {
           <button 
             className="mobile-toggle-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            style={{ 
-              display: 'none',
-              background: '#f1f5f9', 
-              border: '1px solid #cbd5e1', 
-              borderRadius: '8px', 
-              padding: '8px', 
-              cursor: 'pointer' 
-            }}
+            aria-label="Toggle Navigation Menu"
           >
-            <MenuIcon size={20} />
+            {mobileMenuOpen ? <X size={22} /> : <MenuIcon size={22} />}
           </button>
         </div>
       </header>
@@ -353,101 +346,100 @@ export default function App() {
         </div>
       </div>
 
-      {/* MOBILE MENU ACCORDION */}
+      {/* MOBILE MENU DRAWER OVERLAY */}
       {mobileMenuOpen && (
-        <div style={{
-          background: '#ffffff',
-          padding: '20px',
-          borderBottom: '2px solid #e2e8f0',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '12px'
-        }}>
-          <button
-            onClick={() => {
-              setMobileMenuOpen(false);
-              setCartOpen(true);
-            }}
-            style={{
-              textAlign: 'left',
-              padding: '10px 14px',
-              background: '#e6f4f8',
-              color: '#1e7087',
-              border: 'none',
-              borderRadius: '8px',
-              fontWeight: '600',
-              fontSize: '0.95rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}
-          >
-            <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <ShoppingCart size={18} />
-              <span>Shopping Cart</span>
-            </span>
-            <span className="nav-cart-badge">{totalCartItems}</span>
-          </button>
-          
-          <button
-            onClick={() => {
-              setSelectedCategory('all');
-              navigateTo('home');
-            }}
-            style={{
-              textAlign: 'left',
-              padding: '10px 14px',
-              background: activeTab === 'home' && selectedCategory === 'all' ? '#e6f4f8' : 'transparent',
-              color: activeTab === 'home' && selectedCategory === 'all' ? '#1e7087' : '#334155',
-              border: 'none',
-              borderRadius: '8px',
-              fontWeight: '600',
-              fontSize: '0.95rem'
-            }}
-          >
-            Home
-          </button>
+        <div className="mobile-drawer-backdrop" onClick={() => setMobileMenuOpen(false)}>
+          <div className="mobile-nav-drawer" onClick={(e) => e.stopPropagation()}>
+            <div className="mobile-drawer-header">
+              <div className="mobile-drawer-title">Navigation Menu</div>
+              <button 
+                className="mobile-drawer-close"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="Close Navigation Menu"
+              >
+                <X size={20} />
+              </button>
+            </div>
 
-          {menuCategories.map(cat => (
             <button
-              key={cat.id}
               onClick={() => {
-                navigateTo('home', cat.id);
-                setTimeout(() => {
-                  const el = document.getElementById('featured-products-section');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }, 50);
+                setMobileMenuOpen(false);
+                setCartOpen(true);
               }}
-              style={{
-                textAlign: 'left',
-                padding: '10px 14px',
-                background: selectedCategory === cat.id ? '#e6f4f8' : 'transparent',
-                color: selectedCategory === cat.id ? '#1e7087' : '#334155',
-                border: 'none',
-                borderRadius: '8px',
-                fontWeight: '600',
-                fontSize: '0.95rem'
-              }}
+              className="mobile-cart-btn"
             >
-              {cat.name}
+              <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <ShoppingCart size={18} />
+                <span>Shopping Cart</span>
+              </span>
+              <span className="nav-cart-badge">{totalCartItems}</span>
             </button>
-          ))}
 
-          <button
-            onClick={() => navigateTo('contact')}
-            style={{
-              textAlign: 'left',
-              padding: '10px 14px',
-              background: activeTab === 'contact' ? '#e6f4f8' : 'transparent',
-              color: activeTab === 'contact' ? '#0c0f10ff' : '#334155',
-              border: 'none',
-              borderRadius: '8px',
-              fontWeight: '600',
-              fontSize: '0.95rem'
-            }}
-          >
-            Contacts & Support
-          </button>
+            <button
+              onClick={() => {
+                setSelectedCategory('all');
+                navigateTo('home');
+                setMobileMenuOpen(false);
+              }}
+              className={`mobile-nav-link ${activeTab === 'home' && selectedCategory === 'all' ? 'active' : ''}`}
+            >
+              <span>Home</span>
+            </button>
+
+            <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: '#94a3b8', padding: '6px 4px 2px' }}>
+              Categories
+            </div>
+
+            {menuCategories.map(cat => (
+              <button
+                key={cat.id}
+                onClick={() => {
+                  navigateTo('home', cat.id);
+                  setMobileMenuOpen(false);
+                  setTimeout(() => {
+                    const el = document.getElementById('featured-products-section');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }, 50);
+                }}
+                className={`mobile-nav-link ${selectedCategory === cat.id ? 'active' : ''}`}
+              >
+                <span>{cat.name}</span>
+              </button>
+            ))}
+
+            <button
+              onClick={() => {
+                navigateTo('contact');
+                setMobileMenuOpen(false);
+              }}
+              className={`mobile-nav-link ${activeTab === 'contact' ? 'active' : ''}`}
+            >
+              <span>Contacts & Support</span>
+            </button>
+
+            <div style={{ marginTop: 'auto', paddingTop: '16px' }}>
+              <a
+                href="https://wa.me/+966537842419"
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  background: '#25D366',
+                  color: '#ffffff',
+                  padding: '12px',
+                  borderRadius: '10px',
+                  textDecoration: 'none',
+                  fontWeight: 600,
+                  fontSize: '0.92rem'
+                }}
+              >
+                <span>WhatsApp Support</span>
+              </a>
+            </div>
+          </div>
         </div>
       )}
 
